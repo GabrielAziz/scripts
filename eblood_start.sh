@@ -2,6 +2,7 @@
 
 #### VARIAVEIS
 projects=();
+default_projects=(bloodbank labs billing);
 
 #### CORES
 use_red()
@@ -58,7 +59,7 @@ capture_args()
 {
   ## QUANDO TEM 0 ARGUMENTOS
   if [ $# -eq 0 ]; then
-    projects=( "bloodbank" "labs" "billing" );
+    projects=${default_projects[@]}
   fi
 
   ## QUANDO TEM ENTRE 1 E 3 ARGUMENTOS
@@ -83,7 +84,7 @@ up_server;
 }
 
 #### CAPTURANDO ARGUMENTOS
-while getopts 'ih' OPTION; do
+while getopts 'idh' OPTION; do
   case "$OPTION" in
     i)
       ##BloodBank
@@ -109,6 +110,32 @@ while getopts 'ih' OPTION; do
 
       exit 1;
       ;;
+    d)
+	##BloodBank
+      echo "deseja adicionar $(use_red bloodbank) ao default?(y/n)"
+      read -r bloodbank_up
+      if [ $bloodbank_up != "y" ] && [ $bloodbank_up != "n" ]; then echo "resposta invalida, apenas s/n"; exit 1; fi
+
+      ##Labs
+      echo "deseja adcionar $(use_red labs) ao default?(y/n)"
+      read -r labs_up
+      if [ $labs_up != "y" ] && [ $labs_up != "n" ]; then echo "resposta invalida, apenas s/n"; exit 1; fi
+
+      ##Billing
+      echo "deseja adcionar $(use_red billing) ao default?(y/n)"
+      read -r billing_up
+      if [ $billing_up != "y" ] && [ $billing_up != "n" ]; then echo "resposta invalida, apenas s/n"; exit 1; fi
+
+
+      if [ $bloodbank_up = "y" ]; then projects+=( "bloodbank" ); fi
+      if [ $labs_up = "y" ]; then projects+=( "labs" ); fi
+      if [ $billing_up = "y" ]; then projects+=( "billing" ); fi
+	new_default_projects_string="${projects[@]// / }"
+        default_projects_string="${default_projects[@]// / }"
+        sed -i "5 s/default_projects=($default_projects_string)/default_projects=($new_default_projects_string)/" ~/.scripts/eblood_start.sh
+	echo "Projetos que vo subir por padrao alterado"
+	exit 1
+        ;;
     h)
       echo "Voce pode apenas dar eblood_start e subir $(use_red [bloodbank, labs, billing e user])"
       echo "Mas se voce prefere argumentos pode passa-los, sera aceito $(use_red [bloodbank, labs, billing])"
