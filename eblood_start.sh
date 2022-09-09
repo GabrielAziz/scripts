@@ -2,7 +2,7 @@
 
 #### VARIAVEIS
 projects=();
-default_projects=(bloodbank labs billing);
+default_projects=(bloodbank);
 
 #### CORES
 use_red()
@@ -84,7 +84,7 @@ up_server;
 }
 
 #### CAPTURANDO ARGUMENTOS
-while getopts 'idh' OPTION; do
+while getopts 'iadh' OPTION; do
   case "$OPTION" in
     i)
       ##BloodBank
@@ -108,6 +108,11 @@ while getopts 'idh' OPTION; do
       if [ $billing_up = "y" ]; then projects+=( "billing" ); fi
       up_server;
 
+      exit 1;
+      ;;
+    a)
+      projects=("bloodbank" "labs" "billing")
+      up_server
       exit 1;
       ;;
     d)
