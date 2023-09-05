@@ -2,7 +2,7 @@
 
 #### VARIAVEIS
 projects=();
-default_projects=(bloodbank);
+default_projects=(bloodbank labs);
 
 #### CORES
 use_red()
@@ -42,7 +42,7 @@ user()
 #### FUNÇOES
 open_tab()
 {
-  gnome-terminal --tab -t "$1" -- bash -c "cd $2; $3; exec zsh";
+  gnome-terminal --tab -t "$1" -- bash -c "cd $2; $3;exec zsh";
 }
 
 up_server()

@@ -50,11 +50,11 @@ echo "Seu alias está correto? ($(use_green y)/$(use_red n))"
 read -r correto
 
 if [ $correto == "y" ]; then
-  #echo -e "#$comentario \nalias $nome=\"$comando\"" >> ~/.zshrc
+  echo -e "#$comentario \nalias $nome=\"$comando\"" >> ~/.zshrc
   echo "Alias adicionado com sucesso! :)"
-  #exec /bin/zsh;
 
   echo "Deseja adicionar ao arquivo de visualizaçao? ($(use_green y)/$(use_red n))"
   read -r adicionar
   if [ $adicionar == "y" ]; then add_view; fi
+  exec /bin/zsh;
 fi
